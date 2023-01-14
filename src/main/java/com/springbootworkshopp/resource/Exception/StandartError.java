@@ -9,7 +9,7 @@ public class StandartError implements Serializable{
 	private int status;
 	private String erro;
 	private String path;
-	private String messenger;
+	
 
 	public StandartError() {
 		super();
@@ -21,7 +21,7 @@ public class StandartError implements Serializable{
 		this.status = status;
 		this.erro = erro;
 		this.path = path;
-		this.messenger = messenger;
+		
 	}
 
 	public Long getTimestamp() {
@@ -56,13 +56,7 @@ public class StandartError implements Serializable{
 		this.path = path;
 	}
 
-	public String getMessenger() {
-		return messenger;
-	}
-
-	public void setMessenger(String messenger) {
-		this.messenger = messenger;
-	}
+	
 	
 	
 

@@ -13,7 +13,7 @@ public class ResourceExceptionHandler {
 	
 	public ResponseEntity<StandartError>objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandartError err =  new StandartError(System.currentTimeMillis(), status.value(), "nao encontrado", request.getRequestURI(), e.getMessage());
+		StandartError err =  new StandartError(System.currentTimeMillis(), status.value(), "nao encontrado", request.getRequestURI(), null);
 		return ResponseEntity.status(status).body(err);
 	}
 
