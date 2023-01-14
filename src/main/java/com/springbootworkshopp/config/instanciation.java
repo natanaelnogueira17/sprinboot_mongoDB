@@ -13,6 +13,7 @@ import com.springbootworkshopp.Repository.UserRepository;
 import com.springbootworkshopp.domain.Post;
 import com.springbootworkshopp.domain.User;
 import com.springbootworkshopp.dto.AuthorDTO;
+import com.springbootworkshopp.dto.CommentDTO;
 @Configuration
 public class instanciation implements CommandLineRunner{
 	
@@ -39,7 +40,12 @@ public class instanciation implements CommandLineRunner{
 	
 		Post post1 = new Post(null, sdf.parse("21/03/2022"), "Partiu viagem", "vou viajar pra SP!", new AuthorDTO(alex));
 		Post post2 = new Post(null, sdf.parse("22/03/2022"), "bom dia ", "Que Lugar linda", new AuthorDTO(maria));
-		
+		CommentDTO c1 =  new CommentDTO("boa viagem mano", sdf.parse("27/03/2018"), new AuthorDTO(alex));
+		CommentDTO c2 =  new CommentDTO("aproveite", sdf.parse("27/03/2018"), new AuthorDTO(bob));
+		CommentDTO c3 =  new CommentDTO("cuida!", sdf.parse("27/03/2018"), new AuthorDTO(alex));
+
+		post1.getComments().addAll(Arrays.asList(c1,c3));
+		post2.getComments().addAll(Arrays.asList(c2));
 		
 		postRepository.saveAll(Arrays.asList(post1,post2));
 		
