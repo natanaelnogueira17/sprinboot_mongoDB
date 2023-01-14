@@ -12,6 +12,7 @@ import com.springbootworkshopp.Repository.PostRepository;
 import com.springbootworkshopp.Repository.UserRepository;
 import com.springbootworkshopp.domain.Post;
 import com.springbootworkshopp.domain.User;
+import com.springbootworkshopp.dto.AuthorDTO;
 @Configuration
 public class instanciation implements CommandLineRunner{
 	
@@ -34,12 +35,12 @@ public class instanciation implements CommandLineRunner{
 		User maria = new User(null, "Maria Brown", "maria@gmail.com");
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
-		
-		Post post1 = new Post(null, sdf.parse("21/03/2022"), "Partiu viagem", "vou viajar pra SP!", maria);
-		Post post2 = new Post(null, sdf.parse("22/03/2022"), "bom dia ", "Que Lugar linda", maria);
-		
-		
 		repository.saveAll(Arrays.asList(maria, alex, bob));
+	
+		Post post1 = new Post(null, sdf.parse("21/03/2022"), "Partiu viagem", "vou viajar pra SP!", new AuthorDTO(alex));
+		Post post2 = new Post(null, sdf.parse("22/03/2022"), "bom dia ", "Que Lugar linda", new AuthorDTO(maria));
+		
+		
 		postRepository.saveAll(Arrays.asList(post1,post2));
 	}
 	
