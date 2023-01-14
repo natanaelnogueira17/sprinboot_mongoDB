@@ -15,26 +15,42 @@ import com.springbootworkshopp.service.exception.ObjectNotFoundException;
 public class UserService {
 	@Autowired
 	private UserRepository repository;
-	
-	
-	
-	public List<User>findAll(){
+
+	public List<User> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public User findById(String id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.orElseThrow(()-> new ObjectNotFoundException("Objeto nao encontrado"));
-		
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado"));
+
 	}
-	
-	public User insert (User obj) {
+
+	public User insert(User obj) {
 		return repository.insert(obj);
-		
+
 	}
-	
+
 	public User fromDTO(UserDTO objDto) {
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+	}
+
+	public void delete(String id) {
+		findById(id);
+
+		repository.deleteById(id);
+
+	}
+	
+	public User update(User obj) {
+		User newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repository.save(obj);
+		}
+
+	private void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getName());
 	}
 
 }

@@ -19,31 +19,48 @@ import com.springbootworkshopp.service.UserService;
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
-	
+
 	@Autowired
 	private UserService service;
-	
+
 	@RequestMapping("/buscartodos")
-	public ResponseEntity<List<UserDTO>> findAll(){
-		
+	public ResponseEntity<List<UserDTO>> findAll() {
+
 		List<User> list = service.findAll();
-		List<UserDTO> listDTO = list.stream().map(x-> new UserDTO(x)).collect(Collectors.toList());
+		List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
+
 	@RequestMapping("/{id}")
-	public ResponseEntity<UserDTO> findById(@PathVariable String id){
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
-	
-	@RequestMapping("/users")
-	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto){
+
+	@RequestMapping("/insert")
+	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
 		User obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+
+	}
+	
+	@RequestMapping("/delete{id}")
+	public ResponseEntity<User> deleteById(@PathVariable String id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+		
 		
 	}
 	
+	@RequestMapping("/update{id}")
+	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
+		User obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+
+	}
+
 }
